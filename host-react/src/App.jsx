@@ -7,6 +7,7 @@ import { load } from "growlers/store";
 import Taps from "growlers/Taps";
 import Search from "growlers/Search";
 import Cart from "growlers/Cart";
+import DataComponent from "growlers/DataComponent";
 import { ChakraProvider, Container, Heading } from "@chakra-ui/react";
 
 load("hv-taplist");
@@ -23,18 +24,23 @@ const App = () => (
         Host React
       </Heading>
       <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 3fr",
-        gap: "16px",
-      }}
-    >
-      <div>
-        <Search />
-        <Cart />
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 3fr",
+          gap: "16px",
+        }}
+      >
+        <div>
+          <Search />
+          <DataComponent>
+            {({ filteredTaps }) =>
+              filteredTaps.map(({ beverageName }) => beverageName).join(", ")
+            }
+          </DataComponent>
+          <Cart />
+        </div>
+        <Taps />
       </div>
-      <Taps />
-    </div>
     </Container>
   </ChakraProvider>
 );
