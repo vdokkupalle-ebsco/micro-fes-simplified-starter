@@ -1,26 +1,18 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const path = require("path");
 
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-    publicPath: "http://localhost:8080/",
+    publicPath: "http://localhost:8081/",
   },
 
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    extensions: [".jsx", ".js", ".json"],
   },
 
   devServer: {
-    contentBase: path.join(__dirname, "public"),
-    port: 8080,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers":
-        "X-Requested-With, content-type, Authorization",
-    },
+    port: 8081,
   },
 
   module: {
@@ -37,7 +29,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -48,15 +40,12 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "growlers",
+      name: "hostReact",
       filename: "remoteEntry.js",
-      remotes: {},
-      exposes: {
-        "./Cart": "./src/components/Cart",
-        "./Search": "./src/components/Search",
-        "./Taps": "./src/components/Taps",
-        "./store": "./src/store",
+      remotes: {
+        growlers: "growlers@http://localhost:8080/remoteEntry.js"
       },
+      exposes: {},
       shared: {
         ...deps,
         react: {
