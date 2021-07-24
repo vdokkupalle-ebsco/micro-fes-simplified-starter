@@ -7,6 +7,9 @@ import Taps from "./components/Taps";
 import Cart from "./components/Cart";
 
 import "./index.css";
+import { load } from "./store";
+
+load('hv-taplist');
 
 const H3 = ({ children }) => (
   <Text fontSize="xl" mb={3} fontWeight="bold" textAlign="center">
