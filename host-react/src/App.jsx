@@ -22,11 +22,8 @@ const App = () => (
       >
         Host React
       </Heading>
-    </Container>
-    <div
+      <div
       style={{
-        maxWidth: "960px",
-        margin: "auto",
         display: "grid",
         gridTemplateColumns: "1fr 3fr",
         gap: "16px",
@@ -38,6 +35,7 @@ const App = () => (
       </div>
       <Taps />
     </div>
+    </Container>
   </ChakraProvider>
 );
 
